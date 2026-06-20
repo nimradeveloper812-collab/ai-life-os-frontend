@@ -1,0 +1,26 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import DashboardPage from './pages/DashboardPage'
+import ExpensePage from './pages/ExpensePage'
+import TaskPage from './pages/TaskPage'
+import GoalPage from './pages/GoalPage'
+import Navbar from './components/Navbar'
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          <Routes>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/expenses" element={<ExpensePage />} />
+            <Route path="/tasks" element={<TaskPage />} />
+            <Route path="/goals" element={<GoalPage />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
+  )
+}
+
+export default App
