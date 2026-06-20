@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:5020/api/Task'
+const BASE_URL = 'https://ai-life-os-backend-cuc9.onrender.com/api/Task'
 
 function TaskPage() {
   const [tasks, setTasks] = useState([])

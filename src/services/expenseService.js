@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:5020/api/Expense'
+const BASE_URL = 'https://ai-life-os-backend-cuc9.onrender.com/api/Expense'
 
 export const getExpenses = () => axios.get(BASE_URL)
 export const createExpense = (data) => axios.post(BASE_URL, data)

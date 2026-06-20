@@ -12,10 +12,10 @@ function DashboardPage() {
       const exp = res.data.filter(e => e.type === 'Expense').reduce((s, e) => s + e.amount, 0)
       setTotalExpense(exp)
     })
-    axios.get('http://localhost:5020/api/Task').then(res => {
+    axios.get('https://ai-life-os-backend-cuc9.onrender.com/api/Task').then(res => {
       setTasks({ total: res.data.length, completed: res.data.filter(t => t.isCompleted).length })
     })
-    axios.get('http://localhost:5020/api/Goal').then(res => {
+    axios.get('https://ai-life-os-backend-cuc9.onrender.com/api/Goal').then(res => {
       setGoalsCount(res.data.length)
     })
   }, [])
