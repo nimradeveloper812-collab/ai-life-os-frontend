@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { GoogleLogin } from '@react-oauth/google'
+import { jwtDecode } from 'jwt-decode'
 
 const API = 'https://ai-life-os-backend-cuc9.onrender.com/api/Auth'
 
@@ -20,6 +22,23 @@ function RegisterPage() {
       setError(err.response?.data?.message || 'Registration failed')
     }
     setLoading(false)
+  }
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const decoded = jwtDecode(credentialResponse.credential)
+      const res = await axios.post(`${API}/google`, {
+        googleId: decoded.sub,
+        email: decoded.email,
+        name: decoded.name
+      })
+      localStorage.setItem('token', res.data.token)
+      localStorage.setItem('userId', res.data.userId)
+      localStorage.setItem('name', res.data.name)
+      navigate('/')
+    } catch {
+      setError('Google login failed')
+    }
   }
 
   return (
@@ -60,6 +79,19 @@ function RegisterPage() {
         >
           {loading ? 'Creating account...' : 'Register'}
         </button>
+
+        <div className="flex items-center my-4">
+          <div className="flex-1 h-px bg-gray-200"/>
+          <span className="px-3 text-gray-400 text-sm">or</span>
+          <div className="flex-1 h-px bg-gray-200"/>
+        </div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError('Google login failed')}
+          />
+        </div>
 
         <p className="text-center text-sm text-gray-500 mt-4">
           Already have an account?{' '}
