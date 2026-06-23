@@ -19,14 +19,10 @@ function LoginPage() {
       localStorage.setItem('userId', res.data.userId)
       localStorage.setItem('name', res.data.name)
       navigate('/')
-    } catch (err) {
+    } catch {
       setError('Invalid email or password')
     }
     setLoading(false)
-  }
-
-  const handleGoogle = () => {
-    window.location.href = `${API}/google-redirect`
   }
 
   return (
@@ -66,20 +62,6 @@ function LoginPage() {
           className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition disabled:opacity-50"
         >
           {loading ? 'Logging in...' : 'Login'}
-        </button>
-
-        <div className="flex items-center my-4">
-          <div className="flex-1 h-px bg-gray-200"/>
-          <span className="px-3 text-gray-400 text-sm">or</span>
-          <div className="flex-1 h-px bg-gray-200"/>
-        </div>
-
-        <button
-          onClick={handleGoogle}
-          className="w-full border border-gray-300 hover:bg-gray-50 py-2.5 rounded-lg font-medium text-sm flex items-center justify-center gap-2 transition"
-        >
-          <img src="https://www.google.com/favicon.ico" className="w-4 h-4" />
-          Continue with Google
         </button>
 
         <p className="text-center text-sm text-gray-500 mt-4">

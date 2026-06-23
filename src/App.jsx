@@ -9,10 +9,8 @@ import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import Navbar from './components/Navbar'
 
-const isLoggedIn = () => !!localStorage.getItem('token')
-
 function ProtectedRoute({ children }) {
-  return isLoggedIn() ? children : <Navigate to="/login" />
+  return localStorage.getItem('token') ? children : <Navigate to="/login" />
 }
 
 function App() {
