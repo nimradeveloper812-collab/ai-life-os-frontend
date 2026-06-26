@@ -2,9 +2,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const links = [
   { to: '/', label: '🏠', full: 'Dashboard' },
-  { to: '/expenses', label: '💰', full: 'Expenses' },
+  { to: '/expenses', label: '💰', full: 'Money' },
   { to: '/tasks', label: '✅', full: 'Tasks' },
   { to: '/goals', label: '🎯', full: 'Goals' },
+  { to: '/health', label: '💪', full: 'Health' },
+  { to: '/time', label: '⏰', full: 'Habits' },
+  { to: '/brain', label: '🧠', full: 'Brain' },
   { to: '/profile', label: '👤', full: 'Profile' },
 ]
 
