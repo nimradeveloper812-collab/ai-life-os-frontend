@@ -3,6 +3,7 @@ import DashboardPage from './pages/DashboardPage'
 import ExpensePage from './pages/ExpensePage'
 import TaskPage from './pages/TaskPage'
 import GoalPage from './pages/GoalPage'
+import ProfilePage from './pages/ProfilePage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
@@ -23,7 +24,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/*" element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-50 pb-20 md:pb-0">
               <Navbar />
               <div className="max-w-5xl mx-auto px-4 py-6">
                 <Routes>
@@ -31,6 +32,7 @@ function App() {
                   <Route path="/expenses" element={<ExpensePage />} />
                   <Route path="/tasks" element={<TaskPage />} />
                   <Route path="/goals" element={<GoalPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
                 </Routes>
               </div>
             </div>

@@ -1,68 +1,68 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-
-const BASE_URL = 'https://ai-life-os-backend-cuc9.onrender.com/api/Task'
+import { getTasks, createTask, updateTask, deleteTask } from '../services/expenseService'
 
 function TaskPage() {
   const [tasks, setTasks] = useState([])
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(false)
+  const [filter, setFilter] = useState('All')
 
   useEffect(() => { fetchTasks() }, [])
 
   const fetchTasks = async () => {
-    const res = await axios.get(BASE_URL)
+    const res = await getTasks()
     setTasks(res.data)
   }
 
   const handleAdd = async () => {
-    if (!title) return alert('Title likho!')
+    if (!title) return
     setLoading(true)
-    await axios.post(BASE_URL, { userId: 1, title, isCompleted: false })
+    await createTask({ title, isCompleted: false })
     setTitle('')
     await fetchTasks()
     setLoading(false)
   }
 
   const handleToggle = async (task) => {
-    await axios.put(`${BASE_URL}/${task.id}`, { ...task, isCompleted: !task.isCompleted })
+    await updateTask(task.id, { ...task, isCompleted: !task.isCompleted })
     await fetchTasks()
   }
 
   const handleDelete = async (id) => {
-    await axios.delete(`${BASE_URL}/${id}`)
+    await deleteTask(id)
     await fetchTasks()
   }
 
   const completed = tasks.filter(t => t.isCompleted).length
+  const filtered = filter === 'All' ? tasks : filter === 'Done' ? tasks.filter(t => t.isCompleted) : tasks.filter(t => !t.isCompleted)
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">✅ Task Management</h2>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-gray-800">✅ Task Management</h2>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-          <p className="text-sm text-gray-500">Total Tasks</p>
-          <p className="text-xl font-bold text-blue-600">{tasks.length}</p>
+      <div className="grid grid-cols-3 gap-4">
+        <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Total</p>
+          <p className="text-2xl font-bold text-blue-600 mt-1">{tasks.length}</p>
         </div>
-        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-          <p className="text-sm text-gray-500">Completed</p>
-          <p className="text-xl font-bold text-green-600">{completed}</p>
+        <div className="bg-green-50 border border-green-200 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Done</p>
+          <p className="text-2xl font-bold text-green-600 mt-1">{completed}</p>
         </div>
-        <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
-          <p className="text-sm text-gray-500">Remaining</p>
-          <p className="text-xl font-bold text-orange-500">{tasks.length - completed}</p>
+        <div className="bg-orange-50 border border-orange-200 rounded-2xl p-4">
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Pending</p>
+          <p className="text-2xl font-bold text-orange-500 mt-1">{tasks.length - completed}</p>
         </div>
       </div>
 
-      {/* Add Task */}
-      <div className="bg-white rounded-xl shadow p-5 mb-6">
-        <h3 className="font-semibold text-gray-700 mb-4">➕ Naya Task</h3>
+      {/* Add */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+        <h3 className="font-semibold text-gray-700 mb-4">➕ New Task</h3>
         <div className="flex gap-3">
           <input
-            className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Task title likho..."
+            className="flex-1 border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Task title..."
             value={title}
             onChange={e => setTitle(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleAdd()}
@@ -70,36 +70,49 @@ function TaskPage() {
           <button
             onClick={handleAdd}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition disabled:opacity-50"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition disabled:opacity-50"
           >
-            {loading ? 'Adding...' : '➕ Add'}
+            {loading ? '...' : 'Add'}
           </button>
         </div>
       </div>
 
-      {/* Task List */}
-      <div className="bg-white rounded-xl shadow">
-        <div className="px-5 py-4 border-b">
-          <h3 className="font-semibold text-gray-700">📋 Tasks ({tasks.length})</h3>
+      {/* Filter */}
+      <div className="flex gap-2">
+        {['All', 'Pending', 'Done'].map(f => (
+          <button key={f} onClick={() => setFilter(f)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition ${
+              filter === f ? 'bg-blue-600 text-white' : 'bg-white border text-gray-600 hover:bg-gray-50'
+            }`}>
+            {f}
+          </button>
+        ))}
+      </div>
+
+      {/* List */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div className="px-5 py-4 border-b border-gray-100">
+          <h3 className="font-semibold text-gray-700">Tasks ({filtered.length})</h3>
         </div>
-        {tasks.length === 0 ? (
-          <p className="text-center text-gray-400 py-8">Koi task nahi hai abhi</p>
+        {filtered.length === 0 ? (
+          <p className="text-center text-gray-400 py-8 text-sm">Koi task nahi</p>
         ) : (
-          <div className="divide-y">
-            {tasks.map(task => (
+          <div className="divide-y divide-gray-50">
+            {filtered.map(task => (
               <div key={task.id} className="flex items-center justify-between px-5 py-3">
                 <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={task.isCompleted}
-                    onChange={() => handleToggle(task)}
-                    className="w-4 h-4 accent-blue-600 cursor-pointer"
-                  />
+                  <button
+                    onClick={() => handleToggle(task)}
+                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition
+                      ${task.isCompleted ? 'bg-green-500 border-green-500 text-white' : 'border-gray-300 hover:border-blue-400'}`}
+                  >
+                    {task.isCompleted && <span className="text-xs">✓</span>}
+                  </button>
                   <span className={`text-sm ${task.isCompleted ? 'line-through text-gray-400' : 'text-gray-800'}`}>
                     {task.title}
                   </span>
                 </div>
-                <button onClick={() => handleDelete(task.id)} className="text-red-400 hover:text-red-600">🗑️</button>
+                <button onClick={() => handleDelete(task.id)} className="text-gray-300 hover:text-red-500 transition text-sm">🗑️</button>
               </div>
             ))}
           </div>
