@@ -8,9 +8,9 @@ const links = [
   { to: '/health', label: '💪', full: 'Health' },
   { to: '/time', label: '⏰', full: 'Habits' },
   { to: '/brain', label: '🧠', full: 'Brain' },
+  { to: '/ai', label: '🤖', full: 'AI' },
   { to: '/profile', label: '👤', full: 'Profile' },
 ]
-
 function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()

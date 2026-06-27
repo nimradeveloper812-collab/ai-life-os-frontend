@@ -14,8 +14,9 @@ import Navbar from './components/Navbar'
 import HealthPage from './pages/HealthPage'
 import TimePage from './pages/TimePage'
 import BrainPage from './pages/BrainPage'
+import AiBrainPage from './pages/AiBrainPage'
 
-
+import AiBrainPage from './pages/AiBrainPage'
 
 function ProtectedRoute({ children }) {
   return localStorage.getItem('token') ? children : <Navigate to="/login" />
@@ -40,8 +41,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         // Routes mein add karo:
+        <Route path="/ai" element={<AiBrainPage />} />
 <Route path="/health" element={<HealthPage />} />
 <Route path="/time" element={<TimePage />} />
+<Route path="/ai" element={<AiBrainPage />} />
 <Route path="/brain" element={<BrainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
