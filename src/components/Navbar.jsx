@@ -8,8 +8,11 @@ const links = [
   { to: '/health', label: '💪', full: 'Health' },
   { to: '/time', label: '⏰', full: 'Habits' },
   { to: '/brain', label: '🧠', full: 'Brain' },
-  { to: '/ai', label: '🤖', full: 'AI' },
+ 
   { to: '/profile', label: '👤', full: 'Profile' },
+
+
+  { to: '/ai', label: '🤖', full: 'AI' },
 ]
 function Navbar() {
   const location = useLocation()

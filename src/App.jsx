@@ -41,11 +41,12 @@ function App() {
     <BrowserRouter>
       <Routes>
         // Routes mein add karo:
-        <Route path="/ai" element={<AiBrainPage />} />
+       
 <Route path="/health" element={<HealthPage />} />
 <Route path="/time" element={<TimePage />} />
 <Route path="/ai" element={<AiBrainPage />} />
 <Route path="/brain" element={<BrainPage />} />
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
