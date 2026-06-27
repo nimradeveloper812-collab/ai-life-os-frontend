@@ -10,13 +10,11 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
-import Navbar from './components/Navbar'
 import HealthPage from './pages/HealthPage'
 import TimePage from './pages/TimePage'
 import BrainPage from './pages/BrainPage'
 import AiBrainPage from './pages/AiBrainPage'
-
-import AiBrainPage from './pages/AiBrainPage'
+import Navbar from './components/Navbar'
 
 function ProtectedRoute({ children }) {
   return localStorage.getItem('token') ? children : <Navigate to="/login" />
@@ -40,13 +38,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        // Routes mein add karo:
-       
-<Route path="/health" element={<HealthPage />} />
-<Route path="/time" element={<TimePage />} />
-<Route path="/ai" element={<AiBrainPage />} />
-<Route path="/brain" element={<BrainPage />} />
-
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -62,9 +53,10 @@ function App() {
                   <Route path="/tasks" element={<TaskPage />} />
                   <Route path="/goals" element={<GoalPage />} />
                   <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/health" element={<div className="text-gray-400 text-center py-20">Coming soon...</div>} />
-                  <Route path="/brain" element={<div className="text-gray-400 text-center py-20">Coming soon...</div>} />
-                  <Route path="/time" element={<div className="text-gray-400 text-center py-20">Coming soon...</div>} />
+                  <Route path="/health" element={<HealthPage />} />
+                  <Route path="/time" element={<TimePage />} />
+                  <Route path="/brain" element={<BrainPage />} />
+                  <Route path="/ai" element={<AiBrainPage />} />
                 </Routes>
               </div>
             </div>
