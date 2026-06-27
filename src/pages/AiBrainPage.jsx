@@ -54,7 +54,7 @@ function Message({ msg, isNew }) {
   return (
     <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} mb-4`}>
       {msg.role === 'ai' && (
-        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-sm mr-2 flex-shrink-0 mt-1">
+        <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-sm mr-2 shrink-0 mt-1">
           ⚡
         </div>
       )}
@@ -71,7 +71,7 @@ function Message({ msg, isNew }) {
         </p>
       </div>
       {msg.role === 'user' && (
-        <div className="w-8 h-8 bg-gray-200 rounded-xl flex items-center justify-center text-sm ml-2 flex-shrink-0 mt-1">
+        <div className="w-8 h-8 bg-gray-200 rounded-xl flex items-center justify-center text-sm ml-2 shrink-0 mt-1">
           {(localStorage.getItem('name') || 'U')[0].toUpperCase()}
         </div>
       )}
@@ -148,7 +148,7 @@ function AiBrainPage() {
     <div className="space-y-4">
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl p-5 text-white">
+      <div className="bg-linear-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl p-5 text-white">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl">
             🤖
@@ -195,7 +195,7 @@ function AiBrainPage() {
               <button key={p}
                 onClick={() => sendMessage(p)}
                 disabled={loading}
-                className="flex-shrink-0 text-xs px-3 py-1.5 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition disabled:opacity-50"
+                className="shrink-0 text-xs px-3 py-1.5 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition disabled:opacity-50"
               >
                 {p}
               </button>
@@ -238,7 +238,7 @@ function AiBrainPage() {
             <button
               onClick={generateReport}
               disabled={reportLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-medium transition disabled:opacity-50 flex items-center justify-center gap-2"
+              className="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 rounded-xl font-medium transition disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {reportLoading ? (
                 <>
@@ -254,7 +254,7 @@ function AiBrainPage() {
           {report && (
             <div className="bg-white rounded-2xl border border-gray-100 p-6 animate-fadeIn">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-sm">⚡</div>
+                <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-sm">⚡</div>
                 <div>
                   <p className="font-semibold text-gray-800 text-sm">AI Life OS Report</p>
                   <p className="text-xs text-gray-400">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
