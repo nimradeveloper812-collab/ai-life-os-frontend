@@ -14,6 +14,7 @@ import HealthPage from './pages/HealthPage'
 import TimePage from './pages/TimePage'
 import BrainPage from './pages/BrainPage'
 import AiBrainPage from './pages/AiBrainPage'
+import LifeScorePage from './pages/LifeScorePage'
 import Navbar from './components/Navbar'
 
 function ProtectedRoute({ children }) {
@@ -44,7 +45,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/*" element={
           <ProtectedRoute>
-            <div className="min-h-screen bg-gray-50 pb-20 md:pb-0">
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0">
               <Navbar />
               <div className="max-w-5xl mx-auto px-4 py-6">
                 <Routes>
@@ -57,6 +58,7 @@ function App() {
                   <Route path="/time" element={<TimePage />} />
                   <Route path="/brain" element={<BrainPage />} />
                   <Route path="/ai" element={<AiBrainPage />} />
+                  <Route path="/score" element={<LifeScorePage />} />
                 </Routes>
               </div>
             </div>
