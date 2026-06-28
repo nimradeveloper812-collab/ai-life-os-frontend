@@ -11,6 +11,7 @@ const links = [
   { to: '/brain', label: '🧠', full: 'Brain' },
   { to: '/ai', label: '🤖', full: 'AI' },
   { to: '/score', label: '⭐', full: 'Score' },
+  { to: '/budget', label: '💳', full: 'Budget' },
   { to: '/profile', label: '👤', full: 'Profile' },
 ]
 

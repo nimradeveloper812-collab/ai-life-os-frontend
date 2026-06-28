@@ -16,6 +16,7 @@ import BrainPage from './pages/BrainPage'
 import AiBrainPage from './pages/AiBrainPage'
 import LifeScorePage from './pages/LifeScorePage'
 import Navbar from './components/Navbar'
+import BudgetPage from './pages/BudgetPage'
 
 function ProtectedRoute({ children }) {
   return localStorage.getItem('token') ? children : <Navigate to="/login" />
@@ -39,10 +40,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/budget" element={<BudgetPage />} />
         <Route path="/*" element={
           <ProtectedRoute>
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0">
