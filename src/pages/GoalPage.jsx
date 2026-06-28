@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getGoals, createGoal, updateGoal, deleteGoal } from '../services/expenseService'
-
+import toast from 'react-hot-toast'
 function GoalPage() {
   const [goals, setGoals] = useState([])
   const [form, setForm] = useState({ title: '', targetValue: '', currentValue: 0 })
@@ -20,16 +20,19 @@ function GoalPage() {
     setForm({ title: '', targetValue: '', currentValue: 0 })
     await fetchGoals()
     setLoading(false)
+   toast.success('Goal created! 🎯')
   }
 
   const handleProgress = async (goal, value) => {
     await updateGoal(goal.id, { ...goal, currentValue: Number(value) })
     await fetchGoals()
+    toast.success('Progress updated! 📈')
   }
 
   const handleDelete = async (id) => {
     await deleteGoal(id)
     await fetchGoals()
+    toast.success('Goal deleted! 🗑️')
   }
 
   return (

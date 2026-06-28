@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
+import toast from 'react-hot-toast'
 
 const API = 'https://ai-life-os-backend-cuc9.onrender.com/api/Auth'
 
@@ -38,9 +39,11 @@ function LoginPage() {
         localStorage.setItem('token', res.data.token)
         localStorage.setItem('userId', res.data.userId)
         localStorage.setItem('name', res.data.name)
+        toast.success('Welcome back! 👋')
         navigate('/')
       } catch {
         setError('Wrong email or password')
+        toast.error('Invalid email or password!')
       }
       setLoading(false)
     }
@@ -57,16 +60,16 @@ function LoginPage() {
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('userId', res.data.userId)
       localStorage.setItem('name', res.data.name)
+      toast.success('Welcome! 🎉')
       navigate('/')
     } catch {
       setError('Google sign in failed')
+      toast.error('Google sign in failed!')
     }
   }
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
-
-      {/* Logo */}
       <div className="mb-8 text-center">
         <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3">
           <span className="text-white text-2xl">⚡</span>
@@ -76,27 +79,21 @@ function LoginPage() {
       </div>
 
       <div className="w-full max-w-sm">
-
-        {/* Success message */}
         {registered && (
           <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-4 text-sm flex items-center gap-2">
             ✅ Account created! Please sign in.
           </div>
         )}
 
-        {/* Error */}
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-4 text-sm flex items-center gap-2">
             <span>⚠️</span> {error}
           </div>
         )}
 
-        {/* Step 0 — Email */}
         {step === 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Email address
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email address</label>
             <input
               autoFocus
               type="email"
@@ -109,7 +106,6 @@ function LoginPage() {
           </div>
         )}
 
-        {/* Step 1 — Password */}
         {step === 1 && (
           <div>
             <div className="flex items-center gap-2 mb-4 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5">
@@ -117,16 +113,12 @@ function LoginPage() {
                 {form.email[0]?.toUpperCase()}
               </div>
               <span className="text-sm text-gray-700">{form.email}</span>
-              <button
-                onClick={() => { setStep(0); setError('') }}
-                className="ml-auto text-xs text-blue-600 hover:underline"
-              >
+              <button onClick={() => { setStep(0); setError('') }}
+                className="ml-auto text-xs text-blue-600 hover:underline">
                 Change
               </button>
             </div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
             <input
               autoFocus
               type="password"
@@ -144,7 +136,6 @@ function LoginPage() {
           </div>
         )}
 
-        {/* Next / Sign in button */}
         <button
           onClick={handleNext}
           disabled={loading}
@@ -152,25 +143,19 @@ function LoginPage() {
         >
           {loading ? (
             <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"/> Signing in...</>
-          ) : step === 0 ? (
-            <>Next <span>→</span></>
-          ) : (
-            'Sign in'
-          )}
+          ) : step === 0 ? <>Next <span>→</span></> : 'Sign in'}
         </button>
 
-        {/* Divider */}
         <div className="flex items-center my-5">
           <div className="flex-1 h-px bg-gray-200"/>
           <span className="px-3 text-gray-400 text-xs">or</span>
           <div className="flex-1 h-px bg-gray-200"/>
         </div>
 
-        {/* Google */}
         <div className="flex justify-center">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
-            onError={() => setError('Google sign in failed')}
+            onError={() => { setError('Google sign in failed'); toast.error('Google sign in failed!') }}
             text="signin_with"
             shape="rectangular"
             size="large"
@@ -178,7 +163,6 @@ function LoginPage() {
           />
         </div>
 
-        {/* Register link */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Don't have an account?{' '}
           <Link to="/register" className="text-blue-600 hover:underline font-medium">Create account</Link>

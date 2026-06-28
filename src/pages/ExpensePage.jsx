@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import { useState, useEffect } from 'react'
 import { getExpenses, createExpense, deleteExpense } from '../services/expenseService'
 
@@ -21,12 +22,14 @@ function ExpensePage() {
     setForm({ title: '', amount: '', type: 'Expense', category: '' })
     await fetchExpenses()
     setLoading(false)
+    toast.success('Expense added! 💰')
   }
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete karna chahte ho?')) return
     await deleteExpense(id)
     await fetchExpenses()
+    toast.success('Deleted! 🗑️')
   }
 
   const filtered = filter === 'All' ? expenses : expenses.filter(e => e.type === filter)

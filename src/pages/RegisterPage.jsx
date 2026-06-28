@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
+import toast from 'react-hot-toast'
 
 const API = 'https://ai-life-os-backend-cuc9.onrender.com/api/Auth'
-
 const steps = ['name', 'email', 'password']
 
 function RegisterPage() {
@@ -34,9 +34,11 @@ function RegisterPage() {
       setLoading(true)
       try {
         await axios.post(`${API}/register`, form)
+        toast.success('Account created! 🎉')
         navigate('/login?registered=true')
       } catch (err) {
         setError(err.response?.data?.message || 'Registration failed')
+        toast.error(err.response?.data?.message || 'Registration failed!')
       }
       setLoading(false)
       return
@@ -56,16 +58,16 @@ function RegisterPage() {
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('userId', res.data.userId)
       localStorage.setItem('name', res.data.name)
+      toast.success('Welcome to AI Life OS! 🎉')
       navigate('/')
     } catch {
       setError('Google sign up failed')
+      toast.error('Google sign up failed!')
     }
   }
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
-      
-      {/* Logo */}
       <div className="mb-8 text-center">
         <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3">
           <span className="text-white text-2xl">⚡</span>
@@ -74,34 +76,24 @@ function RegisterPage() {
         <p className="text-gray-500 text-sm mt-1">to continue to AI Life OS</p>
       </div>
 
-      {/* Card */}
       <div className="w-full max-w-sm">
-        
-        {/* Step indicator */}
         <div className="flex gap-1.5 mb-6 justify-center">
           {steps.map((_, i) => (
-            <div
-              key={i}
-              className={`h-1 rounded-full transition-all duration-300 ${
-                i <= step ? 'bg-blue-600 w-8' : 'bg-gray-200 w-4'
-              }`}
-            />
+            <div key={i} className={`h-1 rounded-full transition-all duration-300 ${
+              i <= step ? 'bg-blue-600 w-8' : 'bg-gray-200 w-4'
+            }`}/>
           ))}
         </div>
 
-        {/* Error */}
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-4 text-sm flex items-center gap-2">
             <span>⚠️</span> {error}
           </div>
         )}
 
-        {/* Step 0 — Name */}
         {step === 0 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              What's your name?
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">What's your name?</label>
             <input
               autoFocus
               className="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
@@ -113,12 +105,9 @@ function RegisterPage() {
           </div>
         )}
 
-        {/* Step 1 — Email */}
         {step === 1 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              What's your email?
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">What's your email?</label>
             <input
               autoFocus
               type="email"
@@ -131,12 +120,9 @@ function RegisterPage() {
           </div>
         )}
 
-        {/* Step 2 — Password */}
         {step === 2 && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Create a password
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">Create a password</label>
             <input
               autoFocus
               type="password"
@@ -146,7 +132,6 @@ function RegisterPage() {
               onChange={e => setForm({ ...form, password: e.target.value })}
               onKeyDown={e => e.key === 'Enter' && handleNext()}
             />
-            {/* Password strength */}
             {form.password.length > 0 && (
               <div className="mt-2">
                 <div className="flex gap-1 mb-1">
@@ -166,7 +151,6 @@ function RegisterPage() {
           </div>
         )}
 
-        {/* Next / Create button */}
         <button
           onClick={handleNext}
           disabled={loading}
@@ -174,14 +158,9 @@ function RegisterPage() {
         >
           {loading ? (
             <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"/> Creating...</>
-          ) : step === 2 ? (
-            'Create Account'
-          ) : (
-            <>Next <span>→</span></>
-          )}
+          ) : step === 2 ? 'Create Account' : <>Next <span>→</span></>}
         </button>
 
-        {/* Back button */}
         {step > 0 && (
           <button
             onClick={() => { setStep(step - 1); setError('') }}
@@ -191,18 +170,16 @@ function RegisterPage() {
           </button>
         )}
 
-        {/* Divider */}
         <div className="flex items-center my-5">
           <div className="flex-1 h-px bg-gray-200"/>
           <span className="px-3 text-gray-400 text-xs">or</span>
           <div className="flex-1 h-px bg-gray-200"/>
         </div>
 
-        {/* Google */}
         <div className="flex justify-center">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
-            onError={() => setError('Google sign up failed')}
+            onError={() => { setError('Google sign up failed'); toast.error('Google sign up failed!') }}
             text="signup_with"
             shape="rectangular"
             size="large"
@@ -210,7 +187,6 @@ function RegisterPage() {
           />
         </div>
 
-        {/* Login link */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{' '}
           <Link to="/login" className="text-blue-600 hover:underline font-medium">Sign in</Link>

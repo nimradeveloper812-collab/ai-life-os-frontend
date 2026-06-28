@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getTasks, createTask, updateTask, deleteTask } from '../services/expenseService'
-
+import toast from 'react-hot-toast'
 function TaskPage() {
   const [tasks, setTasks] = useState([])
   const [title, setTitle] = useState('')
@@ -21,16 +21,19 @@ function TaskPage() {
     setTitle('')
     await fetchTasks()
     setLoading(false)
+    toast.success('Task added! ✅')
   }
 
   const handleToggle = async (task) => {
     await updateTask(task.id, { ...task, isCompleted: !task.isCompleted })
     await fetchTasks()
+    toast.success(task.isCompleted ? 'Task uncompleted!' : 'Task completed! 🎉')
   }
 
   const handleDelete = async (id) => {
     await deleteTask(id)
     await fetchTasks()
+    toast.success('Task deleted! 🗑️')
   }
 
   const completed = tasks.filter(t => t.isCompleted).length
