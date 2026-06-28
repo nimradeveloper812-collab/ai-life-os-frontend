@@ -48,7 +48,7 @@ function DashboardPage() {
     <div className="space-y-6">
 
       {/* Welcome */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 text-white">
+      <div className="bg-linear-to-r from-blue-600 to-purple-600 rounded-2xl p-6 text-white">
         <h2 className="text-2xl font-bold">👋 Welcome back, {name}!</h2>
         <p className="text-blue-100 mt-1 text-sm">Here's your life overview for today</p>
       </div>
@@ -66,7 +66,7 @@ function DashboardPage() {
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{score.message}</p>
           </div>
-          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl font-black bg-gradient-to-br ${gradeColors[score.grade] || 'from-blue-400 to-blue-600'}`}>
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl font-black bg-linear-to-br ${gradeColors[score.grade] || 'from-blue-400 to-blue-600'}`}>
             {score.grade}
           </div>
         </div>

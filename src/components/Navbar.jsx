@@ -49,7 +49,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-2">
           <DarkModeToggle />
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+          <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
             {name[0]?.toUpperCase()}
           </div>
           <button onClick={handleLogout}

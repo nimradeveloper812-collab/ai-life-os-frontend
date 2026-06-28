@@ -88,7 +88,7 @@ export default function LifeScorePage() {
         </div>
 
         {/* Grade Badge */}
-        <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${gradeColors[data.grade]} text-white text-2xl font-black mb-3 shadow-lg`}>
+        <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-linear-to-br ${gradeColors[data.grade]} text-white text-2xl font-black mb-3 shadow-lg`}>
           {data.grade}
         </div>
 
@@ -99,7 +99,7 @@ export default function LifeScorePage() {
           {['F','D','C','B','A','S'].map(g => (
             <div key={g} className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition ${
               g === data.grade
-                ? `bg-gradient-to-br ${gradeColors[g]} text-white shadow-md scale-110`
+                ? `bg-linear-to-br ${gradeColors[g]} text-white shadow-md scale-110`
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-400'
             }`}>
               {g}
@@ -118,7 +118,7 @@ export default function LifeScorePage() {
       </div>
 
       {/* Tips */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-6 border border-blue-100 dark:border-blue-800">
+      <div className="bg-linear-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-3xl p-6 border border-blue-100 dark:border-blue-800">
         <h3 className="font-bold text-gray-800 dark:text-white mb-3">💡 How to improve</h3>
         <div className="space-y-2">
           {data.breakdown.moneyScore < 20 && (
